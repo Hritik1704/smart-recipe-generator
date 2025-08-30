@@ -33,11 +33,7 @@ class SimpleRecipeRecommender:
         try:
             with open('data/recipes.json', 'r', encoding='utf-8') as f:
                 data = json.load(f)
-                # Handle both array format and object format
-                if isinstance(data, list):
-                    self.recipes = data
-                else:
-                    self.recipes = data.get('recipes', [])
+                self.recipes = data.get('recipes', [])
                 
             # Extract all unique ingredients for autocomplete
             for recipe in self.recipes:
