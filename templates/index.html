@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Recipe Generator</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <h1 class="logo">
+                    <i class="fas fa-utensils"></i>
+                    Smart Recipe Generator
+                </h1>
+                <p class="tagline">Discover delicious recipes based on your ingredients</p>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Input Section -->
+            <section class="input-section">
+                <div class="input-methods">
+                    <!-- Image Upload -->
+                    <div class="input-method">
+                        <h3><i class="fas fa-camera"></i> Upload Ingredient Photo</h3>
+                        <div class="upload-area" id="uploadArea">
+                            <input type="file" id="imageInput" accept="image/*" hidden>
+                            <div class="upload-content">
+                                <i class="fas fa-cloud-upload-alt"></i>
+                                <p>Click to upload or drag & drop an image</p>
+                                <small>Supports JPG, PNG, GIF, WebP</small>
+                            </div>
+                        </div>
+                        <div class="upload-result" id="uploadResult" style="display: none;">
+                            <h4>Detected Ingredients:</h4>
+                            <div class="detected-ingredients" id="detectedIngredients"></div>
+                        </div>
+                    </div>
+
+                    <!-- Manual Input -->
+                    <div class="input-method">
+                        <h3><i class="fas fa-keyboard"></i> Enter Ingredients Manually</h3>
+                        <div class="ingredient-input">
+                            <input type="text" id="ingredientInput" placeholder="Type an ingredient and press Enter">
+                            <div class="autocomplete-suggestions" id="autocompleteSuggestions"></div>
+                        </div>
+                        <div class="selected-ingredients" id="selectedIngredients"></div>
+                    </div>
+                </div>
+
+                <!-- Filters -->
+                <div class="filters-section">
+                    <h3><i class="fas fa-filter"></i> Filters & Preferences</h3>
+                    <div class="filters-grid">
+                        <div class="filter-group">
+                            <label for="dietaryRestrictions">Dietary Restrictions:</label>
+                            <select id="dietaryRestrictions" multiple>
+                                <option value="vegetarian">Vegetarian</option>
+                                <option value="vegan">Vegan</option>
+                                <option value="gluten_free">Gluten-Free</option>
+                                <option value="dairy_free">Dairy-Free</option>
+                            </select>
+                        </div>
+                        <div class="filter-group">
+                            <label for="maxCookingTime">Max Cooking Time:</label>
+                            <select id="maxCookingTime">
+                                <option value="">Any</option>
+                                <option value="15">15 minutes</option>
+                                <option value="30">30 minutes</option>
+                                <option value="60">1 hour</option>
+                                <option value="120">2 hours</option>
+                            </select>
+                        </div>
+                        <div class="filter-group">
+                            <label for="difficulty">Difficulty:</label>
+                            <select id="difficulty">
+                                <option value="">Any</option>
+                                <option value="easy">Easy</option>
+                                <option value="medium">Medium</option>
+                                <option value="hard">Hard</option>
+                            </select>
+                        </div>
+                        <div class="filter-group">
+                            <label for="cuisine">Cuisine:</label>
+                            <select id="cuisine">
+                                <option value="">Any</option>
+                                <option value="Italian">Italian</option>
+                                <option value="Asian">Asian</option>
+                                <option value="Mexican">Mexican</option>
+                                <option value="Mediterranean">Mediterranean</option>
+                                <option value="American">American</option>
+                                <option value="Thai">Thai</option>
+                                <option value="Indian">Indian</option>
+                                <option value="Chinese">Chinese</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Search Button -->
+                <button class="search-btn" id="searchBtn" disabled>
+                    <i class="fas fa-search"></i>
+                    Find Recipes
+                </button>
+            </section>
+
+            <!-- Loading State -->
+            <div class="loading" id="loading" style="display: none;">
+                <div class="loading-spinner"></div>
+                <p>Finding perfect recipes for you...</p>
+            </div>
+
+            <!-- Results Section -->
+            <section class="results-section" id="resultsSection" style="display: none;">
+                <div class="results-header">
+                    <h2>Recipe Suggestions</h2>
+                    <div class="results-info" id="resultsInfo"></div>
+                </div>
+                <div class="recipes-grid" id="recipesGrid"></div>
+            </section>
+
+            <!-- Recipe Modal -->
+            <div class="modal" id="recipeModal" style="display: none;">
+                <div class="modal-content">
+                    <span class="close" id="closeModal">&times;</span>
+                    <div class="modal-body" id="modalBody"></div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>&copy; 2025 Smart Recipe Generator - Technical Assessment Project</p>
+        </footer>
+    </div>
+
+    <!-- Error Toast -->
+    <div class="toast" id="errorToast" style="display: none;">
+        <div class="toast-content">
+            <i class="fas fa-exclamation-circle"></i>
+            <span id="errorMessage"></span>
+        </div>
+    </div>
+
+    <!-- Success Toast -->
+    <div class="toast success" id="successToast" style="display: none;">
+        <div class="toast-content">
+            <i class="fas fa-check-circle"></i>
+            <span id="successMessage"></span>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+</body>
+</html>
